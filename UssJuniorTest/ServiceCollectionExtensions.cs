@@ -1,4 +1,9 @@
-﻿using UssJuniorTest.Infrastructure.Repositories;
+﻿using Sieve.Services;
+using UssJuniorTest.Application.Services;
+using UssJuniorTest.Application.Sieve;
+using UssJuniorTest.Core;
+using UssJuniorTest.Core.Models;
+using UssJuniorTest.Infrastructure.Repositories;
 using UssJuniorTest.Infrastructure.Store;
 
 namespace UssJuniorTest;
@@ -9,7 +14,12 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton<IStore, InMemoryStore>();
 
-        services.AddScoped<CarRepository>();
-        services.AddScoped<PersonRepository>();
+        services.AddScoped<IRepository<Car>, CarRepository>();
+        services.AddScoped<IRepository<Person>, PersonRepository>();
+        services.AddScoped<IRepository<DriveLog>, DriverLogRepository>();
+
+        services.AddScoped<IDriverReportsGenerator, DriverReportsGenerator>();
+        
+        services.AddScoped<ISieveProcessor, AppSieveProcessor>();
     }
 }
